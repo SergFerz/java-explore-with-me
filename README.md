@@ -1,7 +1,7 @@
 # java-explore-with-me
 - - -
-
-
+Ссылка на пулл-реквест
+https://github.com/SergFerz/java-explore-with-me/pulls
 - - - 
 ### Описание explore-with-me.
 
