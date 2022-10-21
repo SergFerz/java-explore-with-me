@@ -1,13 +1,13 @@
 # java-explore-with-me
 - - -
-
-
+Ссылка на пулл-реквест
+https://github.com/SergFerz/java-explore-with-me/pulls
 - - - 
 ### Описание explore-with-me.
 
-Приложение состоит из трех модулей: 
-1. main-service - главный сервис 
-2. statatistic-service - сервис статистики 
+Приложение состоит из трех модулей:
+1. main-service - главный сервис
+2. statatistic-service - сервис статистики
 3. expl-me-common - модуль с общим функционалом
 
 Запуск осуществляется в 4 докерах:
