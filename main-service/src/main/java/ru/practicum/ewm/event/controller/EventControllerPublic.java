@@ -2,18 +2,18 @@ package ru.practicum.ewm.event.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.event.dto.EventFullDto;
 import ru.practicum.ewm.event.dto.EventShortDto;
-import ru.practicum.ewm.event.model.EventState;
 import ru.practicum.ewm.event.service.EventService;
 import ru.practicum.ewm.statistic.StatisticService;
-import ru.practicum.ewm.utils.DateTimeUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -30,8 +30,8 @@ public class EventControllerPublic {
     public List<EventShortDto> getEventsPublicByParams(
             @RequestParam(required = false) String text,
             @RequestParam(required = false) Long[] categories,
-            @RequestParam(required = false) String rangeStart,
-            @RequestParam(required = false) String rangeEnd,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeStart,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeEnd,
             @RequestParam(required = false) Boolean paid,
             @RequestParam(required = false) Boolean onlyAvailable,
             @RequestParam(required = false) EventSort sort,
@@ -42,8 +42,8 @@ public class EventControllerPublic {
         EventParameters parameters = EventParameters.builder()
                 .text(text)
                 .categories(categories)
-                .rangeStart(DateTimeUtils.strIso8601toDateTime(rangeStart))
-                .rangeEnd(DateTimeUtils.strIso8601toDateTime(rangeEnd))
+                .rangeStart(rangeStart)
+                .rangeEnd(rangeEnd)
                 .paid(paid)
                 .onlyAvailable(onlyAvailable)
                 .build();

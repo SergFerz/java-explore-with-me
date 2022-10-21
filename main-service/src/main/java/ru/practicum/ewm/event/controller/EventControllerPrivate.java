@@ -5,9 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.event.dto.EventFullDto;
-import ru.practicum.ewm.event.dto.EventNewDto;
+import ru.practicum.ewm.event.dto.NewEventDto;
 import ru.practicum.ewm.event.dto.EventShortDto;
-import ru.practicum.ewm.event.dto.EventUpdateDtoPrivate;
+import ru.practicum.ewm.event.dto.UpdateEventRequest;
 import ru.practicum.ewm.event.service.EventService;
 
 import javax.validation.Valid;
@@ -34,14 +34,14 @@ public class EventControllerPrivate {
 
     @PatchMapping("/{userId}/events")
     public EventFullDto updateEventPrivate(@PathVariable @Positive Long userId,
-                                           @RequestBody EventUpdateDtoPrivate eventUpdateDtoPrivate) {
+                                           @RequestBody UpdateEventRequest updateEventRequest) {
         log.info("Update event by user with id = {}", userId);
-        return eventService.updateEventPrivate(userId, eventUpdateDtoPrivate);
+        return eventService.updateEventPrivate(userId, updateEventRequest);
     }
 
     @PostMapping("/{userId}/events")
     public EventFullDto createEvent(@PathVariable @Positive Long userId,
-                                    @RequestBody @Valid EventNewDto eventNewDto) {
+                                    @RequestBody @Valid NewEventDto eventNewDto) {
         log.info("Create event by user with id = {}", userId);
         return eventService.createEvent(userId, eventNewDto);
     }

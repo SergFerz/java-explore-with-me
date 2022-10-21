@@ -45,7 +45,7 @@ public class RequestController {
         return requestService.getEventRequests(userId, eventId);
     }
 
-    @PatchMapping("/users/{userId}/events/{eventId}/requests/{reqId}/confirm")
+    @PatchMapping("/{userId}/events/{eventId}/requests/{reqId}/confirm")
     public ParticipationRequestDto confirmRequest(@PathVariable @Positive Long userId,
                                                   @PathVariable @Positive Long eventId,
                                                   @PathVariable @Positive Long reqId) {
@@ -53,7 +53,7 @@ public class RequestController {
         return requestService.confirmRequest(userId, eventId, reqId);
     }
 
-    @PatchMapping("/users/{userId}/events/{eventId}/requests/{reqId}/confirm")
+    @PatchMapping("/{userId}/events/{eventId}/requests/{reqId}/reject")
     public ParticipationRequestDto rejectRequest(@PathVariable @Positive Long userId,
                                                   @PathVariable @Positive Long eventId,
                                                   @PathVariable @Positive Long reqId) {

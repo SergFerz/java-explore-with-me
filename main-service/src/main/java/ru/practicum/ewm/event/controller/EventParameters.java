@@ -6,7 +6,6 @@ import ru.practicum.ewm.event.model.EventState;
 
 import java.time.LocalDateTime;
 
-
 @Data
 @Builder
 public class EventParameters {

@@ -1,7 +1,7 @@
 package ru.practicum.ewm.request.dto;
 
 import ru.practicum.ewm.request.model.Request;
-import ru.practicum.ewm.utils.DateTimeUtils;
+import ru.practicum.statistic.utils.DateTimeUtils;
 
 public class RequestMapper {
 

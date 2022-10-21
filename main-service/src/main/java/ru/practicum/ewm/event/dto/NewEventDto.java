@@ -3,7 +3,8 @@ package ru.practicum.ewm.event.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import ru.practicum.ewm.utils.DateTimeUtils;
+import lombok.NoArgsConstructor;
+import ru.practicum.statistic.utils.DateTimeUtils;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -13,7 +14,8 @@ import javax.validation.constraints.Positive;
 @Data
 @AllArgsConstructor
 @Builder
-public class EventNewDto {
+@NoArgsConstructor
+public class NewEventDto {
     @NotBlank
     private String annotation;
     @NotNull

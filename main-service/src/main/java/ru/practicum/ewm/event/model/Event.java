@@ -20,7 +20,7 @@ public class Event {
     private Long id;
     @Column(name = "annotation", nullable = false)
     private String annotation;
-    @Column(name = "description", nullable = false, length = 1000)
+    @Column(name = "description", nullable = false)
     private String description;
     @Column(name = "created", nullable = false)
     private LocalDateTime created;

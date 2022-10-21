@@ -20,7 +20,17 @@ public class ErrorHandler {
         return new ErrorResponse(exception.getMessage());
     }
 
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorResponse handleIllegalArgumentException(final IncorrectActionException exception) {
+        return new ErrorResponse(exception.getMessage());
+    }
 
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleIllegalArgumentException(final StatisticServiceUnavailableException exception) {
+        return new ErrorResponse(exception.getMessage());
+    }
 
     private class ErrorResponse {
         private String error;
@@ -33,5 +43,4 @@ public class ErrorHandler {
             return error;
         }
     }
-
 }

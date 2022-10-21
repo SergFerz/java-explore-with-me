@@ -1,4 +1,4 @@
-package ru.practicum.ewm.utils;
+package ru.practicum.statistic.utils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
