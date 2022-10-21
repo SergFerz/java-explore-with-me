@@ -22,6 +22,7 @@ import java.util.List;
 @Slf4j
 public class EventControllerAdmin {
     private final EventService eventService;
+
     @GetMapping
     public List<EventFullDto> getEventsByParams(@RequestParam(required = false) Long[] users,
                                         @RequestParam(required = false) EventState[] states,

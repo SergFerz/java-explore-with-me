@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     @Column(name = "user_id", nullable = false)
     private Long userId;
     @Column(name = "event_id", nullable = false)

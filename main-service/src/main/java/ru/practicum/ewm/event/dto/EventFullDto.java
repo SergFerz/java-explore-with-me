@@ -10,7 +10,7 @@ import ru.practicum.ewm.event.model.EventState;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class EventFullDto extends EventShortDto{
+public class EventFullDto extends EventShortDto {
 
     private String createdOn;
     private String publishedOn;

@@ -29,8 +29,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto getCategoryById(Long catId) {
-        Category category = categoryRepository.findById(catId).
-                orElseThrow(() -> new NotFoundException("Введено некорректное значение id категории"));
+        Category category = categoryRepository.findById(catId)
+                .orElseThrow(() -> new NotFoundException("Введено некорректное значение id категории"));
         return CategoryMapper.toCategoryDto(category);
     }
 
@@ -53,8 +53,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteCategoryById(Long catId) {
-        Category category = categoryRepository.findById(catId).
-                orElseThrow(() -> new NotFoundException("Введено некорректное значение id категории"));
+        Category category = categoryRepository.findById(catId)
+                .orElseThrow(() -> new NotFoundException("Введено некорректное значение id категории"));
         categoryRepository.delete(category);
     }
 }

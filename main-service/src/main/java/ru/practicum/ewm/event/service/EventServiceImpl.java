@@ -202,6 +202,7 @@ public class EventServiceImpl implements EventService {
      * Получает с помощью EventMapper EventFullDto из Event
      * и обогащает числом просмотров из статистики и числом подтвержденных запросов
      */
+
     private EventFullDto getFullDto(Event event) {
         EventFullDto dto = EventMapper.toEventFullDto(event);
         dto.setViews(statisticService.getEventViewCount(event.getId()));

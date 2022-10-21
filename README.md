@@ -1,12 +1,7 @@
 # java-explore-with-me
 - - -
-Фича - подписка на друзей
 
-Подписка на друзей и возможность получать список актуальных событий, в которых они принимают участие.
 
-Описание API находится в Docs/rest_api/subscription_api.yaml (Файл необходимо загрузить в https://editor-next.swagger.io)
-
-Весь код к фиче находится в main-service пакет ru.practicum.subscription
 - - - 
 ### Описание explore-with-me.
 
