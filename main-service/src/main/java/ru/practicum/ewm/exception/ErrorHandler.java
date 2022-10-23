@@ -22,17 +22,17 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ErrorResponse handleIllegalArgumentException(final IncorrectActionException exception) {
+    public ErrorResponse handleIncorrectActionException(final IncorrectActionException exception) {
         return new ErrorResponse(exception.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleIllegalArgumentException(final StatisticServiceUnavailableException exception) {
+    public ErrorResponse handleStatisticServiceUnavailableException(final StatisticServiceUnavailableException exception) {
         return new ErrorResponse(exception.getMessage());
     }
 
-    private class ErrorResponse {
+    private static class ErrorResponse {
         private String error;
 
         public ErrorResponse(String error) {

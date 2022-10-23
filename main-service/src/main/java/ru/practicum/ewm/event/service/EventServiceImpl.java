@@ -35,6 +35,7 @@ public class EventServiceImpl implements EventService {
     private final CategoryRepository categoryRepository;
     private final RequestRepository requestRepository;
     private final StatisticService statisticService;
+    private static final int HOURS_BEFORE_EVENT = 2;
 
     @Override
     public EventFullDto createEvent(Long ownerId, NewEventDto newEventDto) {
@@ -71,10 +72,9 @@ public class EventServiceImpl implements EventService {
         }
         if (updateEventRequest.getEventDate() != null) {
             LocalDateTime newDateTime = DateTimeUtils.strToDateTime(updateEventRequest.getEventDate());
-            if (newDateTime.minusHours(2).isBefore(LocalDateTime.now())) {
+            if (newDateTime.minusHours(HOURS_BEFORE_EVENT).isBefore(LocalDateTime.now())) {
                 throw new IncorrectActionException("Дата и время на которые намечено событие не " +
-                        "может быть раньше, чем через два часа от " +
-                        "текущего момента");
+                        "может быть раньше, чем через два часа от текущего момента");
             }
         }
         EventMapper.prepareForUpdate(updateEventRequest, sourceEvent);
@@ -86,7 +86,8 @@ public class EventServiceImpl implements EventService {
     public EventFullDto updateEventAdmin(Long eventId, AdminUpdateEventRequest adminUpdateEventRequest) {
         // Здесь мы по тз не делаем валидацию
         // Предполагаем, что все входные данные верные
-        Event sourceEvent = eventRepository.findById(eventId).get();
+        Event sourceEvent = eventRepository.findById(eventId)
+                .orElseThrow(() -> new NotFoundException("Указанное событие в базе данных не найдено"));
         EventMapper.prepareForUpdate(adminUpdateEventRequest, sourceEvent);
         Event event = eventRepository.save(sourceEvent);
         return getFullDto(event);
@@ -102,8 +103,7 @@ public class EventServiceImpl implements EventService {
     public EventFullDto cancelUserEvent(Long userId, Long eventId) {
         Event event = getEventAndCheckOwner(userId, eventId);
         if (event.getState() != EventState.PENDING) {
-            throw new IncorrectActionException("Отменить можно только событие в состоянии " +
-                    "ожидания модерации");
+            throw new IncorrectActionException("Отменить можно только событие в состоянии ожидания модерации");
         }
         event.setState(EventState.CANCELED);
         eventRepository.save(event);
@@ -150,12 +150,10 @@ public class EventServiceImpl implements EventService {
         Event event = getAndCheckEvent(eventId);
         LocalDateTime published = LocalDateTime.now();
         if (event.getEventDate().minusHours(1).isBefore(published)) {
-            throw new IncorrectActionException("Дата начала события должна быть не ранее " +
-                    "чем за час от даты публикации");
+            throw new IncorrectActionException("Дата начала события должна быть не ранее, чем за час от даты публикации");
         }
         if (event.getState() != EventState.PENDING) {
-            throw new IncorrectActionException("Событие должно быть в состоянии " +
-                    "ожидания публикации");
+            throw new IncorrectActionException("Событие должно быть в состоянии ожидания публикации");
         }
         event.setPublished(published);
         event.setState(EventState.PUBLISHED);
@@ -193,8 +191,7 @@ public class EventServiceImpl implements EventService {
     private Event getEventAndCheckOwner(long ownerId, long eventId) {
         Event event = getAndCheckEvent(eventId);
         if (!event.getOwner().getId().equals(ownerId)) {
-            throw new IncorrectActionException("Доступ/изменение информации чужого " +
-                    "события запрещен");
+            throw new IncorrectActionException("Доступ/изменение информации чужого события запрещен");
         }
         return event;
     }
