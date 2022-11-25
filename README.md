@@ -2,6 +2,14 @@
 - - -
 Ссылка на пулл-реквест
 https://github.com/SergFerz/java-explore-with-me/pulls
+
+Фича - подписка на друзей
+
+Подписка на друзей и возможность получать список актуальных событий, в которых они принимают участие.
+
+
+
+Весь код к фиче находится в main-service пакет ru.practicum.subscription
 - - - 
 ### Описание explore-with-me.
 
