@@ -32,7 +32,6 @@ import java.util.List;
 @TestPropertySource(locations = "classpath:application.properties")
 public class SubscriptionTests {
 
-
     private final EntityManager em;
     private final SubscriptionService subscriptionService;
     private final UserService userService;
