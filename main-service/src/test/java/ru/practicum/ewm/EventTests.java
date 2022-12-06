@@ -2,8 +2,13 @@ package ru.practicum.ewm;
 
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 import org.junit.jupiter.api.Test;
@@ -14,20 +19,28 @@ import ru.practicum.ewm.event.controller.EventSort;
 import ru.practicum.ewm.event.dto.*;
 import ru.practicum.ewm.event.model.Event;
 import ru.practicum.ewm.event.service.EventService;
+import ru.practicum.ewm.statistic.StatisticService;
 import ru.practicum.ewm.user.dto.UserDto;
 import ru.practicum.ewm.user.service.UserService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 
 @Transactional
 @SpringBootTest
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @TestPropertySource(locations = "classpath:application.properties")
+@ExtendWith({MockitoExtension.class})
 public class EventTests {
 
+    @MockBean
+    private StatisticService statisticService;
     private final EntityManager em;
+    @InjectMocks
     private final EventService eventService;
     private final UserService userService;
     private final CategoryService categoryService;
@@ -63,7 +76,7 @@ public class EventTests {
 
     @Test
     public void findEvent() {
-
+        Mockito.when(statisticService.getEventViewCount((Set<Long>) Mockito.any())).thenReturn(Map.of(1L,1L, 2L,2L));
         CategoryDto categoryDto = new CategoryDto(null, "category1");
         categoryDto = categoryService.createCategory(categoryDto);
 
