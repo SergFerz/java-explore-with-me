@@ -1,6 +1,7 @@
 package ru.practicum.ewm.category.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import ru.practicum.ewm.category.dto.CategoryDto;
 import ru.practicum.ewm.category.dto.CategoryMapper;
 import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.category.repository.CategoryRepository;
+import ru.practicum.ewm.exception.ConflictException;
 import ru.practicum.ewm.exception.NotFoundException;
 
 import java.util.List;
@@ -37,8 +39,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto createCategory(CategoryDto categoryDto) {
         Category category = CategoryMapper.toCreateCategory(categoryDto);
-        category = categoryRepository.save(category);
-        return CategoryMapper.toCategoryDto(category);
+        try {
+            category = categoryRepository.save(category);
+            return CategoryMapper.toCategoryDto(category);
+        } catch (DataIntegrityViolationException ex) {
+            throw new ConflictException("Категория с таким именем уже существует");
+        }
     }
 
     @Override
@@ -47,6 +53,13 @@ public class CategoryServiceImpl implements CategoryService {
             throw new IllegalArgumentException("Введено некорректное значение id категории для обновления");
         }
         Category category = CategoryMapper.toCategory(categoryDto);
+        List<String> names = getAllCategory()
+                .stream()
+                .map(Category::getName)
+                .collect(Collectors.toList());
+        if (names.contains(category.getName())) {
+            throw new ConflictException("Категория с таким именем уже существует");
+        }
         category = categoryRepository.save(category);
         return CategoryMapper.toCategoryDto(category);
     }
@@ -56,5 +69,9 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(catId)
                 .orElseThrow(() -> new NotFoundException("Введено некорректное значение id категории"));
         categoryRepository.delete(category);
+    }
+
+    public List<Category> getAllCategory() {
+        return categoryRepository.findAll();
     }
 }

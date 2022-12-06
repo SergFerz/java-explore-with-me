@@ -10,37 +10,31 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleNotFoundException(final NotFoundException exception) {
-        return new ErrorResponse(exception.getMessage());
+    public ApiError handleNotFoundException(final NotFoundException exception) {
+        return new ApiError(exception, HttpStatus.NOT_FOUND, exception.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleIllegalArgumentException(final IllegalArgumentException exception) {
-        return new ErrorResponse(exception.getMessage());
+    public ApiError handleIllegalArgumentException(final IllegalArgumentException exception) {
+        return new ApiError(exception, HttpStatus.BAD_REQUEST, exception.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ErrorResponse handleIllegalArgumentException(final IncorrectActionException exception) {
-        return new ErrorResponse(exception.getMessage());
+    public ApiError handleIllegalArgumentException (final IncorrectActionException exception) {
+        return new ApiError(exception, HttpStatus.FORBIDDEN, exception.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleIllegalArgumentException(final StatisticServiceUnavailableException exception) {
-        return new ErrorResponse(exception.getMessage());
+    public ApiError handleIllegalArgumentException(final StatisticServiceUnavailableException exception) {
+        return new ApiError(exception, HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
     }
 
-    private class ErrorResponse {
-        private String error;
-
-        public ErrorResponse(String error) {
-            this.error = error;
-        }
-
-        public String getError() {
-            return error;
-        }
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiError handleConflictException(final ConflictException exception) {
+        return new ApiError(exception, HttpStatus.CONFLICT, exception.getMessage());
     }
 }

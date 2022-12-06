@@ -1,9 +1,11 @@
 package ru.practicum.ewm.user.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ru.practicum.ewm.exception.ConflictException;
 import ru.practicum.ewm.exception.NotFoundException;
 import ru.practicum.ewm.user.dto.UserDto;
 import ru.practicum.ewm.user.dto.UserMapper;
@@ -36,8 +38,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = UserMapper.toCreateUser(userDto);
-        user = userRepository.save(user);
-        return UserMapper.toUserDto(user);
+        try {
+            user = userRepository.save(user);
+            return UserMapper.toUserDto(user);
+        } catch (DataIntegrityViolationException ex) {
+            throw new ConflictException("Пользователь с такой электронной почтой уже существует");
+        }
     }
 
     @Override
