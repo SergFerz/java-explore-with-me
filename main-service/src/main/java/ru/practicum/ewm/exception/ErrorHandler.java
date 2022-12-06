@@ -22,7 +22,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ApiError handleIllegalArgumentException (final IncorrectActionException exception) {
+    public ApiError handleIllegalArgumentException(final IncorrectActionException exception) {
         return new ApiError(exception, HttpStatus.FORBIDDEN, exception.getMessage());
     }
 
