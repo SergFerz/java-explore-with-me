@@ -3,6 +3,7 @@ package ru.practicum.ewm.user.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -17,8 +18,10 @@ public class User {
     private Long id;
 
     @Column(name = "name",  nullable = false)
+    @Size(max = 100)
     private String name;
 
     @Column(name = "email", nullable = false)
+    @Size(max = 100)
     private String email;
 }

@@ -3,6 +3,7 @@ package ru.practicum.ewm.compilation.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Getter
@@ -22,6 +23,7 @@ public class Compilation {
     private Boolean pinned;
 
     @Column(name = "title", nullable = false)
+    @Size(max = 500)
     private String title;
 
     @OneToMany

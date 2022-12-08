@@ -5,6 +5,7 @@ import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.user.model.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,8 +20,10 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "annotation", nullable = false)
+    @Size(max = 1000)
     private String annotation;
     @Column(name = "description", nullable = false)
+    @Size(max = 4000)
     private String description;
     @Column(name = "created", nullable = false)
     private LocalDateTime created;
@@ -39,6 +42,7 @@ public class Event {
     @Column(name = "request_moderation")
     private Boolean requestModeration;
     @Column(name = "title", nullable = false)
+    @Size(max = 200)
     private String title;
     @Enumerated(EnumType.STRING)
     @Column(name = "state")
